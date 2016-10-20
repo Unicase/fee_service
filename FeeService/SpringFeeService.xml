@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+	<bean id="testBean" class="com.abnamro.poc.feeservice.TestBean"></bean>
+	<bean id="jmsConnectionFactory"
+		class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL"
+			value="vm://localhost?broker.persistent=false">
+		</property>
+	</bean>
+	<bean id="pooledConnectionFactory"
+		class="org.apache.activemq.pool.PooledConnectionFactory"
+		init-method="start" destroy-method="stop">
+		<property name="maxConnections" value="8"></property>
+		<property name="connectionFactory" ref="jmsConnectionFactory"></property>
+	</bean>
+	<bean id="jmsTemplate"
+		class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory"
+			ref="pooledConnectionFactory">
+		</property>
+	</bean>
+	
+	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring" autoStartup="true">
+		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
+		
+		<route>
+			<from uri="activemq:queue:test"></from>
+			<doTry>
+        		<to id="validate" uri="validator:contract.xsd"/>
+        		<to id="transform" uri="xslt:contract.xsl"/>
+        		<to id="display" ref="testBeanUriHelloMethod"/>
+        		<doCatch>
+            		<exception>org.apache.camel.ValidationException</exception>
+            		<to uri="mock:invalid"/>
+        		</doCatch>
+    		</doTry>
+		</route>
+	</camelContext>
+</beans>
