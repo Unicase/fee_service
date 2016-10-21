@@ -1,3 +1,1 @@
-MAVEN_OPTS="-javaagent:jolokia-jvm-1.3.5-agent.jar=host=0.0.0.0"
-export MAVEN_OPTS
-nohup mvn compile exec:java -Dexec.mainClass=com.abnamro.poc.feeservice.FeeService &
+nohup mvn compile exec:java -Dexec.mainClass=com.abnamro.poc.feeservice.FeeService >/var/log/feeservice/feeservice.out 2>&1 &
