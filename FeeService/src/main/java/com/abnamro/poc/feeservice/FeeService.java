@@ -12,7 +12,7 @@ import org.apache.camel.ProducerTemplate;
 public class FeeService {
 
 	public static void main(String[] args) throws Exception {
-		ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext("file:SpringFeeService.xml");
+		ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext("SpringFeeService.xml");
 		
 		CamelContext camelContext = (SpringCamelContext) appContext.getBean("mycamel");
 		
