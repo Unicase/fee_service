@@ -34,12 +34,17 @@
 	
 	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring" autoStartup="true">
 		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
+				
+		<dataFormats>
+    		<jaxb id="myJaxb" prettyPrint="true" contextPath="com.abnamro.poc.feeservice.Contract"/>
+  		</dataFormats>
 		
 		<route>
 			<from uri="activemq:queue:test"></from>
 			<doTry>
         		<to id="validate" uri="validator:contract.xsd"/>
         		<to id="transform" uri="xslt:contract.xsl"/>
+        		<marshal ref="myJaxb"/>
         		<to id="display" ref="testBeanUriHelloMethod"/>
         		<doCatch>
             		<exception>org.apache.camel.ValidationException</exception>
