@@ -36,7 +36,7 @@
 		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
 				
 		<dataFormats>
-    		<jaxb id="myJaxb" prettyPrint="true" contextPath="com.abnamro.poc.feeservice.Contract"/>
+    		<jaxb id="myJaxb" prettyPrint="true" contextPath="com.abnamro.poc.feeservice"/>
   		</dataFormats>
 		
 		<route>
@@ -44,7 +44,7 @@
 			<doTry>
         		<to id="validate" uri="validator:contract.xsd"/>
         		<to id="transform" uri="xslt:contract.xsl"/>
-        		<marshal ref="myJaxb"/>
+        		<unmarshal ref="myJaxb"/>
         		<to id="display" ref="testBeanUriHelloMethod"/>
         		<doCatch>
             		<exception>org.apache.camel.ValidationException</exception>
