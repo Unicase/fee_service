@@ -1,6 +1,7 @@
 package com.abnamro.poc.feeservice;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement
 public class Contract {

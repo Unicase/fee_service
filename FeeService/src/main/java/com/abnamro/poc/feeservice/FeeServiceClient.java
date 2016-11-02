@@ -22,7 +22,7 @@ public class FeeServiceClient {
 		FileInputStream fis = new FileInputStream(new File(filename));
 		String xmlcontent = IOUtils.toString(fis);
 		
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://feeservice.hopto.org:61616");
 		 
         Connection connection = connectionFactory.createConnection();
         connection.start();
