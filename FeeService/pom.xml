@@ -103,11 +103,6 @@
     	<type>maven-plugin</type>
     </dependency>
     <dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-entitymanager</artifactId>
-    	<version>5.2.3.Final</version>
-    </dependency>
-    <dependency>
     	<groupId>mysql</groupId>
     	<artifactId>mysql-connector-java</artifactId>
     	<version>6.0.4</version>
@@ -121,6 +116,12 @@
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate</artifactId>
     	<version>3.5.4-Final</version>
+    	<type>pom</type>
+    </dependency>
+    <dependency>
+    	<groupId>hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>3.4.0.GA</version>
     	<type>pom</type>
     </dependency>
   </dependencies>
