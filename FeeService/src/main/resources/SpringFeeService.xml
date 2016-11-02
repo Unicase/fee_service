@@ -31,6 +31,16 @@
 			ref="pooledConnectionFactory">
 		</property>
 	</bean>
+	<bean id="jpa" class="org.apache.camel.component.jpa.JpaComponent">
+       <property name="entityManagerFactory" ref="entityManagerFactory"/>
+       <property name="transactionManager" ref="jpaTxManager"/>
+    </bean>
+    <bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="persistenceUnit"/>
+    </bean>
 	
 	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring" autoStartup="true">
 		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
@@ -46,6 +56,7 @@
         		<to id="transform" uri="xslt:contract.xsl"/>
         		<unmarshal ref="myJaxb"/>
         		<to id="display" ref="testBeanUriHelloMethod"/>
+        		<to id="store" uri="jpa:com.abnamro.poc.feeservice.Contract"/>
         		<doCatch>
             		<exception>org.apache.camel.ValidationException</exception>
             		<to uri="mock:invalid"/>
