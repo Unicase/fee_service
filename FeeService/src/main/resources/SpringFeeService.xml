@@ -44,7 +44,7 @@
 			<doTry>
         		<to id="validate" uri="validator:contract.xsd"/>
         		<to id="transform" uri="xslt:contract.xsl"/>
-        		<marshal ref="myJaxb"/>
+        		<unmarshal ref="myJaxb"/>
         		<to id="display" ref="testBeanUriHelloMethod"/>
         		<doCatch>
             		<exception>org.apache.camel.ValidationException</exception>
