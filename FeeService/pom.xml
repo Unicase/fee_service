@@ -108,9 +108,9 @@
     	<version>5.2.3.Final</version>
     </dependency>
     <dependency>
-    	<groupId>com.mysql</groupId>
-    	<artifactId>management</artifactId>
-    	<version>5-0-2-beta</version>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>6.0.4</version>
     </dependency>
   </dependencies>
 
