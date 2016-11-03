@@ -55,6 +55,7 @@ public class Contract {
 		this.group = group;
 	}
 
+	@Column(name = "fgroup")
     public String getGroup() {
         return this.group;
     }
