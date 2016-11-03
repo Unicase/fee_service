@@ -3,6 +3,7 @@ package com.abnamro.poc.feeservice;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 @Entity
