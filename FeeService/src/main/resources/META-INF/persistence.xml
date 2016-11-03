@@ -9,7 +9,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://feeservice.hopto.org:3306/feeservice" />
             <property name="javax.persistence.jdbc.user" value="feeservice" />
             <property name="javax.persistence.jdbc.password" value="feeservice" />
-            <property name="hbm2ddl.auto" value="create" />
+            <property name="hbm2ddl.auto" value="update" />
  
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
         </properties>
