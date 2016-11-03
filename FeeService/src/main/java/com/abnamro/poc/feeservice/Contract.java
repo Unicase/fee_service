@@ -5,23 +5,26 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 
 @Entity
 @XmlRootElement
 public class Contract {
-	int id;
+	@Id
+	@GeneratedValue
+	long id;
+	int contractId;
 	int version;
 	String source;
 	String family, group, type;
 	
 	@XmlElement(name="identifier")
-	public void setId(int id) {
-		this.id = id;
+	public void setContractId(int id) {
+		this.contractId = id;
 	}
 
-	@Id
-    public int getId() {
-        return this.id;
+    public int getContractId() {
+        return this.contractId;
     }
 
 	@XmlElement
