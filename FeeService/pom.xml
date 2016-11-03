@@ -92,12 +92,6 @@
     	<version>2.18.0</version>
     </dependency>
     <dependency>
-    	<groupId>org.codehaus.mojo</groupId>
-    	<artifactId>hibernate3-maven-plugin</artifactId>
-    	<version>3.0</version>
-    	<type>maven-plugin</type>
-    </dependency>
-    <dependency>
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate-core</artifactId>
     	<version>5.2.4.Final</version>
@@ -111,6 +105,11 @@
     	<groupId>org.mariadb.jdbc</groupId>
     	<artifactId>mariadb-java-client</artifactId>
     	<version>1.5.4</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-maven-plugin</artifactId>
+    	<version>4.3.1.Final</version>
     </dependency>
   </dependencies>
 
