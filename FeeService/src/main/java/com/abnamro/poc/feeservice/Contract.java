@@ -10,13 +10,21 @@ import javax.persistence.GeneratedValue;
 @Entity
 @XmlRootElement
 public class Contract {
-	@Id
-	@GeneratedValue
 	long id;
 	int contractId;
 	int version;
 	String source;
 	String family, group, type;
+	
+	@Id
+	@GeneratedValue
+	public long getId() {
+        return this.id;
+	}
+	
+	public void setId(long id) {
+        this.id = id;
+	}
 	
 	@XmlElement(name="identifier")
 	public void setContractId(int id) {
