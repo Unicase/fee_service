@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contract>
-  <identifier>887967</identifier>
-  <version>1</version>
-  <source>MX</source>
-  <systemDate>20161017</systemDate>
-  <systemTime>10:20:13</systemTime>
-  <event>insertion</event>
-  <family>IRD</family>
-  <group>IRS</group>
-  <type>SWP_VAN</type>
-  <counterParty>Goldman Sachs</counterParty>
-  <grossFee>100000</grossFee>
+	<identifier>887967</identifier>
+	<version>1</version>
+	<source>MX</source>
+	<systemDate>20161017</systemDate>
+	<systemTime>10:20:13</systemTime>
+	<event>insertion</event>
+	<family>IRD</family>
+	<group>IRS</group>
+	<type>SWP_VAN</type>
+	<counterParty>Goldman Sachs</counterParty>
+	<grossFee>100000</grossFee>
 </contract>

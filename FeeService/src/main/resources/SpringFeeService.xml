@@ -1,92 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jolokia="http://www.jolokia.org/jolokia-spring/schema/config"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 	http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
 	http://www.jolokia.org/jolokia-spring/schema/config http://www.jolokia.org/jolokia-spring/schema/config/jolokia-config.xsd">
-	
-	<bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">
-        <property name="resources" value="classpath:application.yml"/>
-    </bean>
 
-    <context:property-placeholder properties-ref="yamlProperties"/>
-	
+	<bean id="yamlProperties"
+		class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">
+		<property name="resources" value="classpath:application.yml" />
+	</bean>
+
+	<context:property-placeholder
+		properties-ref="yamlProperties" />
+
 	<jolokia:agent lookupConfig="false" systemPropertiesMode="never">
-        <jolokia:config autoStart="true" host="0.0.0.0" port="8778"/>
-    </jolokia:agent>
+		<jolokia:config autoStart="true" host="0.0.0.0" port="8778" />
+	</jolokia:agent>
 
 	<bean id="testBean" class="com.abnamro.poc.feeservice.TestBean"></bean>
-	
-	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="vm://localhost?broker.persistent=false"/>
-	</bean>
-	
-	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" init-method="start" destroy-method="stop">
-		<property name="maxConnections" value="8"/>
-		<property name="connectionFactory" ref="jmsConnectionFactory"/>
-	</bean>
-	
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="pooledConnectionFactory"/>
-	</bean>
-	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${datasource.driverClassName}"/>
-        <property name="url" value="${datasource.url}"/>
-        <property name="username" value="${datasource.username}"/>
-        <property name="password" value="${datasource.password}"/>
-    </bean>
-    
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="persistenceUnit"/>
-        <property name="dataSource" ref="dataSource"/>
 
-        <property name="jpaVendorAdapter"> 
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
-                <property name="showSql" value="${hibernate.showSql}"/> 
-                <property name="generateDdl" value="true"/>
-            </bean> 
-        </property>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-            </props>
-        </property>
-    </bean>
-    
-    <bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
-    
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="vm://localhost?broker.persistent=false" />
+	</bean>
+
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		init-method="start" destroy-method="stop">
+		<property name="maxConnections" value="8" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="pooledConnectionFactory" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${datasource.driverClassName}" />
+		<property name="url" value="${datasource.url}" />
+		<property name="username" value="${datasource.username}" />
+		<property name="password" value="${datasource.password}" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="persistenceUnit" />
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="showSql" value="${hibernate.showSql}" />
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
 	<bean id="jpa" class="org.apache.camel.component.jpa.JpaComponent">
-       <property name="entityManagerFactory" ref="entityManagerFactory"/>
-       <property name="transactionManager" ref="jpaTxManager"/>
-    </bean>
-    	
-	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring" autoStartup="true">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="transactionManager" ref="jpaTxManager" />
+	</bean>
+
+	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring"
+		autoStartup="true">
 		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
-				
+
 		<dataFormats>
-    		<jaxb id="myJaxb" prettyPrint="true" contextPath="com.abnamro.poc.feeservice"/>
-  		</dataFormats>
-		
+			<jaxb id="myJaxb" prettyPrint="true" contextPath="com.abnamro.poc.feeservice" />
+		</dataFormats>
+
 		<route>
 			<from uri="activemq:queue:test"></from>
 			<doTry>
-        		<to id="validate" uri="validator:contract.xsd"/>
-        		<to id="transform" uri="xslt:contract.xsl"/>
-        		<unmarshal ref="myJaxb"/>
-        		<to id="display" ref="testBeanUriHelloMethod"/>
-        		<to id="store" uri="jpa:com.abnamro.poc.feeservice.Contract"/>
-        		<doCatch>
-            		<exception>org.apache.camel.ValidationException</exception>
-            		<to uri="mock:invalid"/>
-        		</doCatch>
-    		</doTry>
+				<to id="validate" uri="validator:contract.xsd" />
+				<to id="transform" uri="xslt:contract.xsl" />
+				<unmarshal ref="myJaxb" />
+				<to id="display" ref="testBeanUriHelloMethod" />
+				<to id="store" uri="jpa:com.abnamro.poc.feeservice.Contract" />
+				<doCatch>
+					<exception>org.apache.camel.ValidationException</exception>
+					<to uri="mock:invalid" />
+				</doCatch>
+			</doTry>
 		</route>
 	</camelContext>
 </beans>
