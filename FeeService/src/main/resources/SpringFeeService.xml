@@ -31,17 +31,38 @@
 			ref="pooledConnectionFactory">
 		</property>
 	</bean>
-	<bean id="jpa" class="org.apache.camel.component.jpa.JpaComponent">
-       <property name="entityManagerFactory" ref="entityManagerFactory"/>
-       <property name="transactionManager" ref="jpaTxManager"/>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${datasource.driverClassName}"/>
+        <property name="url" value="${datasource.url}"/>
+        <property name="username" value="${datasource.username}"/>
+        <property name="password" value="${datasource.password}"/>
+    </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"> 
+        <property name="persistenceXmlLocation" value="classpath:./META-INF/persistence.xml"/>
+        <property name="persistenceUnitName" value="persistenceUnit"/>
+        <property name="dataSource" ref="dataSource"/>
+
+        <property name="jpaVendorAdapter"> 
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
+                <property name="showSql" value="true" /> 
+                <property name="generateDdl" value="true"/>
+            </bean> 
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
     </bean>
     <bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="persistenceUnit"/>
+	<bean id="jpa" class="org.apache.camel.component.jpa.JpaComponent">
+       <property name="entityManagerFactory" ref="entityManagerFactory"/>
+       <property name="transactionManager" ref="jpaTxManager"/>
     </bean>
-	
+    	
 	<camelContext id="mycamel" xmlns="http://camel.apache.org/schema/spring" autoStartup="true">
 		<endpoint id="testBeanUriHelloMethod" uri="bean:testBean?method=hello"></endpoint>
 				
