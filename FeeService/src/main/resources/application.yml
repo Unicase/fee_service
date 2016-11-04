@@ -1,0 +1,12 @@
+spring:
+    profiles: poc
+datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://feeservice.hopto.org:3306/feeservice
+    username: feeservice
+    password: feeservice
+hibernate:
+    showSql: true
+    hbm2ddl:
+        auto: update
+ ---
