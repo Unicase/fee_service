@@ -9,4 +9,4 @@ hibernate:
     showSql: true
     hbm2ddl:
         auto: update
- ---
+        
